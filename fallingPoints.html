@@ -1,0 +1,49 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Fallandi punktar</title>
+    
+    <script id="vertex-shader" type="x-shader/x-vertex">
+    uniform float time;
+    uniform vec4 rColor;
+    varying vec4 fragmentColor;
+    attribute vec4 vPosition;
+    
+    void main()
+    {
+        gl_PointSize = 3.0;
+        vec4 tpos = vPosition;
+    
+        tpos.y = 1.0 - mod(0.0015*time + tpos.y+1.0, 2.0);
+        float distanceToCenter = length(tpos.xy);
+        
+        if ((distanceToCenter <= 0.5 && tpos.y < 0.0) || (distanceToCenter > 0.5 && tpos.y > 0.0)) {
+            fragmentColor = vec4(0.0, 0.0, 0.0, 0.0);
+        } else {
+            fragmentColor = vec4(1.0, 0.0, 0.0, 1.0);
+        }
+    
+        gl_Position = tpos; 
+    }
+    </script>
+    
+    <script id="fragment-shader" type="x-shader/x-fragment">
+    precision mediump float;
+    varying vec4 fragmentColor;
+    
+    void main()
+    {
+        gl_FragColor = fragmentColor;
+    }
+    </script>
+    
+    <script type="text/javascript" src="./common/webgl-utils.js"></script>
+    <script type="text/javascript" src="./common/initShaders.js"></script>
+    <script type="text/javascript" src="./common/MV.js"></script>
+    <script type="text/javascript" src="fallingPoints.js"></script>
+    </head>
+    
+    <body>
+    <canvas id="gl-canvas" width="600" height="600">
+    
+    
+    </canvas></body></html>

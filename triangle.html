@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <script id="vertex-shader" type="x-shader/x-vertex">
+            attribute vec4 vPosition;
+            
+            void main()
+            {
+                gl_Position = vPosition;
+            }
+            
+        </script>
+    
+        <script id="fragment-shader" type="x-shader/x-fragment">
+            precision mediump float;
+            uniform float time;
+            uniform vec4 rcolor;
+            
+            float random(float seed) {
+                return fract(sin(seed) * 43758.5453);
+            }
+
+            void
+            main()
+            {
+                vec3 randColor = vec3(random(time), random(time + 1.0), random(time + 2.0));
+        
+                gl_FragColor = vec4(randColor, 1.0);
+            }
+        </script>
+    
+        <script type="text/javascript" src="./common/webgl-utils.js"></script>
+        <script type="text/javascript" src="./common/initShaders.js"></script>
+        <script type="text/javascript" src="./common/MV.js"></script>
+        <script type="text/javascript" src="triangle.js"></script>
+    </head>
+    
+    <body>
+        <canvas id="gl-canvas" width="512" height="512">
+            Oops ... your browser doesn't support the HTML5 canvas element
+        </canvas>
+    </body>
+</html>
